@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Night Picker</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <script src="./js/script.js" type="module"></script>
+
+</head>
+<body data-theme="light">
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">🎬 Movie Night Picker</div>
+                <div class="search-container">
+                    <input type="text" class="search-input" id="searchInput" placeholder="Search for movies...">
+                </div>
+                <button class="theme-toggle" id="themeToggle">Dark Mode</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="main-content">
+            <div class="content-area">
+                <div class="controls">
+                    <button class="btn" id="trendingBtn">Trending</button>
+                    <button class="btn" id="randomBtn">Random Pick</button>
+                    <select class="genre-select" id="genreSelect">
+                        <option value="">All Genres</option>
+                        <option value="28">Action</option>
+                        <option value="35">Comedy</option>
+                        <option value="18">Drama</option>
+                        <option value="27">Horror</option>
+                        <option value="10749">Romance</option>
+                        <option value="878">Sci-Fi</option>
+                    </select>
+                    <button class="btn btn-secondary" id="createPollBtn">📊 Create Poll</button>
+                </div>
+
+                <div id="moviesContainer">
+                    <div class="loading">🎬 Loading trending movies...</div>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <h3>Watchlist</h3>
+                <div id="watchlist"></div>
+
+                <div class="poll-section">
+                    <h3>Current Poll</h3>
+                    <div id="pollContainer">
+                        <p>No active poll</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Movie Details Modal -->
+    <div class="modal" id="movieModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle"></h2>
+                <button class="close-btn" id="closeModal">&times;</button>
+            </div>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <!-- Poll Creation Modal -->
+    <div class="modal" id="pollModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Create Movie Poll</h2>
+                <button class="close-btn" id="closePollModal">&times;</button>
+            </div>
+            <div id="pollCreationBody">
+                <p>Add movies to your watchlist first, then create a poll!</p>
+                <button class="btn" id="createPollFromWatchlist">Create Poll from Watchlist</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
