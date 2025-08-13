@@ -1,34 +1,34 @@
 class MovieNightPicker {
             constructor() {
-                //this.apiKey = '8265bd1679663a7ea12ac168da84d2e8'; // Free key
-                //this.baseUrl = 'https://api.themoviedb.org/3';
-                //this.imageUrl = 'https://image.tmdb.org/t/p/w500';
-                //this.watchlist = JSON.parse(localStorage.getItem('movieWatchlist')) || [];
-                //this.currentPoll = null;
-                //this.currentMovies = [];
+                this.apiKey = '8265bd1679663a7ea12ac168da84d2e8'; // Free key
+                this.baseUrl = 'https://api.themoviedb.org/3';
+                this.imageUrl = 'https://image.tmdb.org/t/p/w500';
+                this.watchlist = JSON.parse(localStorage.getItem('movieWatchlist')) || [];
+                this.currentPoll = null;
+                this.currentMovies = [];
                 
-                //this.init();
+                this.init();
             }
 
-            //init() {
-                //this.setupEventListeners();
-                //this.loadTrendingMovies();
-                //this.updateWatchlist();
-                //this.loadTheme();
+            init() {
+                this.setupEventListeners();
+                this.loadTrendingMovies();
+                this.updateWatchlist();
+                this.loadTheme();
             }
 
-            //setupEventListeners() {
+            setupEventListeners() {
                 // Theme toggle
-                //document.getElementById('themeToggle').addEventListener('click', () => this.toggleTheme());
+                document.getElementById('themeToggle').addEventListener('click', () => this.toggleTheme());
                 
                 // Search
-                //document.getElementById('searchInput').addEventListener('input', (e) => {
-                    //if (e.target.value.length > 2) {
-                        //this.searchMovies(e.target.value);
-                    //} else if (e.target.value.length === 0) {
-                        //this.loadTrendingMovies();
-                    //}
-                //});
+                document.getElementById('searchInput').addEventListener('input', (e) => {
+                    if (e.target.value.length > 2) {
+                        this.searchMovies(e.target.value);
+                    } else if (e.target.value.length === 0) {
+                        this.loadTrendingMovies();
+                    }
+                });
 
                 // Controls
                 document.getElementById('trendingBtn').addEventListener('click', () => this.loadTrendingMovies());
@@ -47,31 +47,31 @@ class MovieNightPicker {
                         this.closePollModal();
                     }
                 });
-            //}
+            }
 
-            //async loadTrendingMovies() {
-                //try {
-                    //const response = await fetch(`${this.baseUrl}/trending/movie/week?api_key=${this.apiKey}`);
-                    //const data = await response.json();
-                    //this.currentMovies = data.results.slice(0, 12);
-                    //this.displayMovies(this.currentMovies);
-                //} catch (error) {
-                    //console.error('Error loading trending movies:', error);
-                    //document.getElementById('moviesContainer').innerHTML = '<div class="loading">❌ Error loading movies</div>';
-                //}
-            //}
-
-            //async searchMovies(query) {
-                //try {
-                    //const response = await fetch(`${this.baseUrl}/search/movie?api_key=${this.apiKey}&query=${encodeURIComponent(query)}`);
+            async loadTrendingMovies() {
+                try {
+                    const response = await fetch(`${this.baseUrl}/trending/movie/week?api_key=${this.apiKey}`);
                     const data = await response.json();
-                    //this.currentMovies = data.results.slice(0, 12);
-                    //this.displayMovies(this.currentMovies);
-                //} catch (error) {
-                    //console.error('Error searching movies:', error);
-                //}
-            //}
-/*........................ *
+                    this.currentMovies = data.results.slice(0, 12);
+                    this.displayMovies(this.currentMovies);
+                } catch (error) {
+                    console.error('Error loading trending movies:', error);
+                    document.getElementById('moviesContainer').innerHTML = '<div class="loading">❌ Error loading movies</div>';
+                }
+            }
+
+            async searchMovies(query) {
+                try {
+                    const response = await fetch(`${this.baseUrl}/search/movie?api_key=${this.apiKey}&query=${encodeURIComponent(query)}`);
+                    const data = await response.json();
+                    this.currentMovies = data.results.slice(0, 12);
+                    this.displayMovies(this.currentMovies);
+                } catch (error) {
+                    console.error('Error searching movies:', error);
+                }
+            }
+
             async getRandomMovie() {
                 const genre = document.getElementById('genreSelect').value;
                 const genreParam = genre ? `&with_genres=${genre}` : '';
@@ -104,7 +104,7 @@ class MovieNightPicker {
                                      alt="${movie.title}">
                                 <div class="movie-info">
                                     <div class="movie-title">${movie.title}</div>
-                                    <div class="movie-rating">${movie.vote_average.toFixed(1)}</div>
+                                    <div class="movie-rating">⭐ ${movie.vote_average.toFixed(1)}</div>
                                 </div>
                             </div>
                         `).join('')}
@@ -135,7 +135,7 @@ class MovieNightPicker {
                              alt="${movie.title}" 
                              style="width: 200px; height: 300px; object-fit: cover; border-radius: 10px;">
                         <div>
-                            <p><strong>Rating:</strong> ${movie.vote_average.toFixed(1)}/10</p>
+                            <p><strong>Rating:</strong> ⭐ ${movie.vote_average.toFixed(1)}/10</p>
                             <p><strong>Release Date:</strong> ${movie.release_date || 'Unknown'}</p>
                             <p><strong>Overview:</strong></p>
                             <p>${movie.overview || 'No overview available.'}</p>
@@ -253,7 +253,7 @@ class MovieNightPicker {
                         </div>
                     `).join('')}
                 `;
- /*...............................................................*/              
+                
                 // Add event listeners
                 const clearBtn = container.querySelector('.clear-poll-btn');
                 if (clearBtn) {
@@ -266,21 +266,21 @@ class MovieNightPicker {
                         this.vote(movieId);
                     });
                 });
-            //}
+            }
 
-           // vote(movieId) {
+            vote(movieId) {
                 if (this.currentPoll) {
                     this.currentPoll.votes[movieId]++;
                     this.updatePollDisplay();
                 }
-            //}
+            }
 
-            //clearPoll() {
+            clearPoll() {
                 this.currentPoll = null;
                 this.updatePollDisplay();
-           // }
+            }
 
-            //toggleTheme() {
+            toggleTheme() {
                 const body = document.body;
                 const toggle = document.getElementById('themeToggle');
                 
@@ -293,23 +293,23 @@ class MovieNightPicker {
                     toggle.textContent = 'Dark Mode';
                     localStorage.setItem('theme', 'light');
                 }
-           // }
+            }
 
-            //loadTheme() {
+            loadTheme() {
                 const savedTheme = localStorage.getItem('theme') || 'light';
                 document.body.setAttribute('data-theme', savedTheme);
                 document.getElementById('themeToggle').textContent = 
                     savedTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
-            //}
+            }
 
-            //closeModal() {
+            closeModal() {
                 document.getElementById('movieModal').style.display = 'none';
-            //}
+            }
 
-            //closePollModal() {
+            closePollModal() {
                 document.getElementById('pollModal').style.display = 'none';
-            //}
-        //}
+            }
+        }
 
         // Initialize the app
         const app = new MovieNightPicker();
